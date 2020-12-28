@@ -19,6 +19,8 @@ npm run build
 ```
 npm run lint
 ```
+###
+git push -f https://github.com/Pito0713/earIngProudct.git master:gh-pages
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -87,7 +87,8 @@ export default {
       sortRe: true,
       searchValue: '',
       cartData: [],
-      CartInNothing: true
+      CartInNothing: true,
+      timer:''
     }
   },
   watch: {
@@ -281,7 +282,10 @@ export default {
         column: this.catchData[i].length
       }
       $.get('https://script.google.com/macros/s/AKfycbzKEwZkfPc610W7d8w8cktq6OO2R8Tfw6GgmHe1aZVGDbkXlGQ/exec', parameter)
-      window.setTimeout(window.location.href = 'productSingle.html', 2000)
+      this.timer = setTimeout(()=>{  //延遲讓後台更新
+        location.href="https://pito0713.github.io/earingSinglePage/"
+      },1000);
+     
     }
   },
   mounted () {
