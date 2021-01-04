@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import productItem from '../components/productItem.vue'
+import productItem from '../components/categoryslider.vue'
 
 export default {
   components: {
