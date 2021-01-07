@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="categoryslider" style="flex:20%" >
-        <ul id='categoryLIst'>
+        <div id='categoryLIst'>
+          <ul >
             <li>
                 <a @click="CatchProductItem('All')">熱銷</a>
             </li>
@@ -21,28 +22,40 @@
                 <a style="font-size:1.2vw;"  @click="backData (Product[0])">{{Product[2]}}</a>
               </div>
             </div>
-            <div style="margin-top:2vw;">
+            <div class="cartSlidertitle">
               <a>購物車裡有</a>
             </div>
             <div class="cartSlider">
               <div v-for="(Product,index) in CartBackData" :key="Product[1]+index">
-                <a style="font-size:1.2vw;"  @click="backData (Product[0])">{{Product[2]}}</a>
-                <a>  {{Product[4]}}個</a><br/>
-                
+                <a style="font-size:1.2vw; text-decoration:underline"  @click="backData (Product[0])">{{Product[2]}}</a>
+                <a>{{Product[4]}}個</a><br/>
               </div>  
             </div>
         </ul>
+        </div> 
       </div>
     <div style="background-color: var(--product-bg-color); flex:80%">
       <div class="filterButton">
-        <div style="margin: 1vw 3vw;">
-          <input class="searcher" style="margin:0vw;" placeholder="要找..." v-model="searchValue">
-          <button style="margin:0vw;" @click="search ()">search</button>
+        <div style="margin: 1vw 2vw">
+          <input class="searcher" style="margin:0vw;" placeholder="想要找..." v-model="searchValue">
+          <button style="margin:0vw;" @click="search ()">
+            <a>搜尋</a>
+          </button>
         </div>
-        <div>
-          <button @click="sortPrice()">價錢高低</button>
-          <button>購買次數</button>
-          <button @click="sortDate()">上架時間</button>
+        <div class="sortButton">
+          <button @click="sortPrice()">
+            <a>
+              價錢高低
+            </a> 
+          </button>
+          <button>
+            <a>購買次數
+            </a>  
+          </button>
+          <button @click="sortDate()">
+            <a>上架時間
+            </a>  
+          </button>
         </div>
       </div>
       <div class="Product" id="Product">
@@ -60,7 +73,7 @@
               </a>
             </div>
           </div>
-          <a style="font-size:0.5vw">上架：{{Product[9]}}</a>
+          <a style="font-size:1vw">上架：{{Product[9]}}</a>
         </div>
       </div>
         <div class="productPage">
@@ -330,6 +343,7 @@ export default {
     display: block;
     position: relative;
     padding-top:1vw;
+    z-index: 1;
     ul{
       background-color: var(--product-bg-color);
     }
@@ -346,6 +360,9 @@ export default {
       padding-top:2vw;
       border-top:1px solid var(--border-color);
       background-color: var(--cart-bg-color)
+    }
+    .cartSlidertitle{
+      margin-top:2vw;
     }
     .cartSlider{
       width: 100%;
@@ -364,16 +381,18 @@ export default {
     align-items: center;
     background-color: var(--background-color);
     button {
-        margin: 1vw 2vw;
+        margin: 1vw;
         background-color: #ffffff;
         border: var(--border-color) 1px solid;
         color: var(--plat-color);
-        font-size: 1.2vw;
+        a{
+          font-size: 1.2vw;
+        }
     }
     .searcher{
       border: var(--border-color) 1px solid;
       margin: 1vw 2vw;
-      font-size: 1.2vw;
+      font-size: 2vw;
     }
 }
 .ProductItem {
@@ -417,7 +436,7 @@ export default {
 }
 @media screen and (max-width: 769px) {
     .ProductItem {
-        width: 40%;
+      width: calc(33% - 30px);
     }
     .ProductItemInfo{
         a{
@@ -429,5 +448,55 @@ export default {
             font-size: 1.5vw;
         }
     }
+    .ProductImg {
+      height: 18vw;
+    }
+}
+@media screen and (max-width:577px){
+    
+}
+@media screen and (max-width:481px){
+  .ProductItem {
+      width: calc(50% - 30px);
+    }
+  .filterButton Button{
+    font-size: 1vw;
+    margin: 0.5vw;
+  }
+  .ProductImg {
+      height: 25vw;
+    }
+  .categoryslider{
+    ul{
+      display: flex;
+      justify-content: space-between;
+    }
+    li{
+      flex:20%;
+      padding: 1.5vw 0;
+    }
+    a{
+        font-size: 1.5vw;
+    }
+    .laterSlider{
+      display: none
+    }
+    .cartSlider{
+      display: none;
+    }
+    .cartSlidertitle{
+      display: none;
+    }
+}  
+
+}
+@media screen and (max-width:361px){
+   .ProductItem {
+      width: calc(100% - 30px);
+    }
+    .ProductImg {
+      height: auto;
+    }
+
 }
 </style>
