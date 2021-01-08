@@ -22,6 +22,10 @@
                 <a style="font-size:1.2vw;"  @click="backData (Product[0])">{{Product[2]}}</a>
               </div>
             </div>
+            <div class="laterSliderRWB">
+              <i class="far fa-heart"></i>
+              <a class="laterSliderLenght">{{cartDataLength}}</a>
+            </div>
             <div class="cartSlidertitle">
               <a>購物車裡有</a>
             </div>
@@ -69,7 +73,7 @@
             <div style="padding-top:1vw; display:flex; justify-content: space-between;">
               <a style="font-size:1.4vw;">NT: {{Product[3]}}</a>
               <a style="float:right; margin:3px 5px;" >
-                <i class="far fa-heart" :class="{fas : Product[5] }" @click="addCart(Product[0])"></i>
+                <i class="far fa-heart" :class="{fas : Product[5] }" @click="laterSlider(Product[0])"></i>
               </a>
             </div>
           </div>
@@ -110,6 +114,7 @@ export default {
       sortRe: true,
       searchValue: '',
       cartData: [],
+      cartDataLength: 0,
       CartInNothing: true,
       timer:'',
       CartBackData: []
@@ -119,7 +124,6 @@ export default {
     cartData: function () {
       if (this.cartData[0] === undefined) {
         this.CartInNothing = !this.CartInNothing
-        // console.log(this.CartInNothing)
       }
     }
   },
@@ -268,7 +272,7 @@ export default {
       this.pagination(this.catchData, 1)
       this.pageSelect()
     },
-    addCart (i) {
+    laterSlider (i) {
       if (this.cartData[0] === undefined) {
         this.CartInNothing = !this.CartInNothing
       }
@@ -279,6 +283,8 @@ export default {
           return item[5] === true // 篩掉出true
         }
       )
+      this.cartDataLength = this.cartData.length;
+      console.log(this.cartDataLength)
     },
     backData (i) {
       console.log(this.catchData[i])
@@ -434,6 +440,31 @@ export default {
     justify-content: center;
     align-items: center;
 }
+.laterSliderRWB {
+  position: fixed;
+  bottom: 14vw;
+  right: 2vw;
+  width: 5vw;
+  height: 5vw;
+  border-radius: 9999px;
+  font-size: 3vw;
+  border: 1px solid var(--border-color);
+  background-color: var(--background-color);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  .laterSliderLenght{
+    width: 3vw;
+    height: 3vw;
+    background-color:red;
+    color: white;
+    border-radius: 9999px;
+    position: absolute;
+    font-size: 2vw;
+    top:-40%;
+    right: -10%;
+}
+}
 @media screen and (max-width: 769px) {
     .ProductItem {
       width: calc(33% - 30px);
@@ -450,6 +481,18 @@ export default {
     }
     .ProductImg {
       height: 18vw;
+    }
+    .cartSlidertitle {
+      display: none;
+    }
+    .cartSlider{
+      display:none
+    }
+    .laterSlider {
+      display: none;
+    }
+    .laterSliderRWB {
+      display: flex;
     }
 }
 @media screen and (max-width:577px){

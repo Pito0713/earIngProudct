@@ -8,7 +8,9 @@
         <li class="nav-Item">
           <a href="https://pito0713.github.io/earIngProudct">耳環 Earrings</a>
         </li>
-        <li class="nav-Item">購物車 Cart</li>
+        <li class="nav-Item">購物車 Cart
+          <a v-if="CartBackDatalenght" class="CartDataLenght"></a>
+        </li>
         <li class="nav-Item">會員 mender</li>
       </ul>
     </div>
@@ -26,13 +28,38 @@ export default {
   data: function () {
     return {
       isOpen: false,
-      scrollTop: ''
+      scrollTop: '',
+      CartBackData: [],
+      CartBackDatalenght: false
     }
   },
   methods: {
     showUp () {
       this.isOpen = !this.isOpen
-    }
+    },
+    CartBackData1 () {
+      this.CartBackData = this.CartBackData.filter( //    用id 屬性篩選我要的
+        function (item) {
+           return item[4] !== '' // 篩掉數量0的空值
+        }
+      )    
+      if(this.CartBackData.length > 0){
+        this.CartBackDatalenght = true
+      } else {
+        this.CartBackDatalenght =false
+      }
+      console.log(this.CartBackDatalenght)
+      }
+  },
+  mounted () {
+    fetch('https://script.google.com/macros/s/AKfycbx9qv7vOKGzbVF57XCjabuTbap2Pigsp34ywUAG83mH55iejwpE/exec')
+      .then(res => {
+        return res.json()
+      })
+      .then(CartBackData => {
+        this.CartBackData  = CartBackData
+        this.CartBackData1 ()
+      })  
   }
 }
 </script>
@@ -59,6 +86,7 @@ export default {
 }
 .navBranch .nav-Item {
   padding: 0 1rem;
+  display: flex;
 }
 .navOps {
   /*show navbar*/
@@ -75,6 +103,15 @@ export default {
   display: block;
   background-color: #000000;
   margin: 4px 0;
+}
+.CartDataLenght{
+  position: relative;
+  display: flex;
+    width: 1vw;
+    height: 1vw;
+    background-color:red;
+    border-radius: 9999px;
+    text-align: center;
 }
 @media screen and (max-width: 769px) {
   .burger {

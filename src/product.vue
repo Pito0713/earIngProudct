@@ -97,5 +97,11 @@ export default {
   position: fixed;
   bottom: 5vw;
   right: 2vw;
+  display: none;
+}
+@media screen and (max-width:768px){
+  .Cartbuttom {
+    display: block
+  }
 }
 </style>
