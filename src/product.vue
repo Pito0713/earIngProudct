@@ -63,20 +63,18 @@ export default {
           categoryLIst.style.position = 'fixed'
           categoryLIst.style.width = '100%'
           categoryLIst.style.top = '69px'
-          categoryLIst.style.opacity = '0.7'
         } else {
           categoryLIst.style.backgroundColor = 'var(--background-color)'
           categoryLIst.style.position = 'fixed'
           categoryLIst.style.width = '18%'
           categoryLIst.style.top = '69px'
-          categoryLIst.style.opacity = '0.7'
         }
       } else {
+        console.log(categoryHeight)
         categoryLIst.style.position = 'relative'
         categoryLIst.style.backgroundColor = 'var(--product-bg-color)'
         categoryLIst.style.width = '100%'
         categoryLIst.style.top = '0px'
-        categoryLIst.style.opacity = '1'
       }
     }
   }
@@ -98,6 +96,7 @@ export default {
   bottom: 5vw;
   right: 2vw;
   display: none;
+  z-index: 3;
 }
 @media screen and (max-width:768px){
   .Cartbuttom {

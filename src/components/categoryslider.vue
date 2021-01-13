@@ -22,10 +22,7 @@
                 <a style="font-size:1.2vw;"  @click="backData (Product[0])">{{Product[2]}}</a>
               </div>
             </div>
-            <div class="laterSliderRWB">
-              <i class="far fa-heart"></i>
-              <a class="laterSliderLenght">{{cartDataLength}}</a>
-            </div>
+            
             <div class="cartSlidertitle">
               <a>購物車裡有</a>
             </div>
@@ -36,7 +33,13 @@
               </div>  
             </div>
         </ul>
+        <div class="laterSliderRWB">
+            <i class="far fa-heart" @click="DropDownOpen()">
+            </i>
+            <a class="laterSliderLenght">{{cartDataLength}}</a>
+          </div>
         </div> 
+        <DropDown class="DropDown" :class="{ DropDownOpen: isOpen }"/>
       </div>
     <div style="background-color: var(--product-bg-color); flex:80%">
       <div class="filterButton">
@@ -101,10 +104,15 @@
 
 <script>
 import $ from 'jquery'
+import DropDown from '../components/Dropdown.vue'
 const moment = require('moment')
 export default {
+  components: {
+    DropDown
+  },
   data: function () {
     return {
+      isOpen: false,
       Products: [],
       pageTotals: [],
       paginationTotal: '',
@@ -277,17 +285,36 @@ export default {
         this.CartInNothing = !this.CartInNothing
       }
       this.ProdcutData[i][5] = !this.ProdcutData[i][5]
-      this.pageSelect() // 重新載入
-      this.cartData = this.catchData.filter(
+      this.cartData = this.ProdcutData.filter(
         function (item) {
           return item[5] === true // 篩掉出true
         }
       )
       this.cartDataLength = this.cartData.length;
       console.log(this.cartDataLength)
+      var data = [[
+        this.ProdcutData[i][5],
+      ]]
+      console.log(data)
+      var parameter = {}
+      parameter = {
+        url: 'https://docs.google.com/spreadsheets/d/1nXquMbDuBjMx2Eo7qO1XBKNrJBm8xNGRGexuOFozlts/edit#gid=0',
+        name: '工作表1',
+        data: data.toString(),
+        row: this.ProdcutData[i][0]+2,
+      }
+      $.get('https://script.google.com/macros/s/AKfycbx9qv7vOKGzbVF57XCjabuTbap2Pigsp34ywUAG83mH55iejwpE/exec', parameter)
+      this.pageSelect() // 重新載入
+    },
+    getlaterSeeData(){
+      this.cartData = this.ProdcutData.filter(
+        function (item) {
+          return item[5] === true // 篩掉出true
+        }
+      )
+      this.cartDataLength = this.cartData.length;
     },
     backData (i) {
-      console.log(this.catchData[i])
       var data = [[
         this.catchData[i][0],
         this.catchData[i][1],
@@ -321,6 +348,9 @@ export default {
           }
       )    
       console.log(this.CartBackData)
+    },
+    DropDownOpen (){
+      this.isOpen = !this.isOpen
     }
   },
   mounted () {
@@ -331,8 +361,9 @@ export default {
       .then(Products => {
         this.ProdcutData = Products
         this.CatchProductItem('All')
+        this.getlaterSeeData()
       })
-    fetch('https://script.google.com/macros/s/AKfycbx9qv7vOKGzbVF57XCjabuTbap2Pigsp34ywUAG83mH55iejwpE/exec')
+    fetch('https://script.google.com/macros/s/AKfycbxLQARlHh9k7LbV8-ORSmVjIYAJtgphhKXFS0e6ypXmpAWJX8cV/exec')
       .then(res => {
         return res.json()
       })
@@ -372,7 +403,6 @@ export default {
     }
     .cartSlider{
       width: 100%;
-      height: 200px;
       overflow: auto;
     }
 }
@@ -441,6 +471,7 @@ export default {
     align-items: center;
 }
 .laterSliderRWB {
+  z-index: 3;
   position: fixed;
   bottom: 14vw;
   right: 2vw;
@@ -463,8 +494,15 @@ export default {
     font-size: 2vw;
     top:-40%;
     right: -10%;
+  }
 }
+.DropDown{
+  display: none;
 }
+.DropDownOpen{
+  display: block !important;
+}
+
 @media screen and (max-width: 769px) {
     .ProductItem {
       width: calc(33% - 30px);
@@ -495,9 +533,7 @@ export default {
       display: flex;
     }
 }
-@media screen and (max-width:577px){
-    
-}
+
 @media screen and (max-width:481px){
   .ProductItem {
       width: calc(50% - 30px);
