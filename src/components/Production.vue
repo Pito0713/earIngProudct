@@ -21,7 +21,7 @@ export default {
   padding-top: 2vw;
   margin: 5vw 3vw;
 }
-@media screen and (max-width:481px){
+@media screen and (max-width:425px){
   .slider {
     display: block;
 }

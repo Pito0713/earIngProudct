@@ -79,7 +79,7 @@ export default {
 .logo{
   display: flex;
   align-items: center;
-  padding: 1vw;
+  padding: 5px;
   img {
     width: 60px;
   }
@@ -128,7 +128,7 @@ export default {
   .navBranch {
     display: block;
     position: fixed;
-    top: 69px;
+    top: 70px;
     /*hidden navbar*/
     left: -250px;
     height: 100%;
@@ -148,6 +148,21 @@ export default {
     .nav-Item:hover{
         border-bottom:2px var(--border-color) solid;
     }
+  }
+  @media screen and (max-width: 425px) {
+    .navBranch {
+    left: -400px;
+    height: 100%;
+    transition: all 1s ease;
+    border-right: 1px var(--border-color) solid;
+    z-index: 99;
+    background-color: var(--background-color);
+    width: 40%;
+   }
+   .navOps {
+   /*show navbar*/
+   transform: translateX(400px);
+   }
   }
 }
 </style>
