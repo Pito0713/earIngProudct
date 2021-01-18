@@ -76,8 +76,13 @@ export default {
   z-index: 10;
   padding: 0 2vw;
 }
-.logo img {
-  width: 60px;
+.logo{
+  display: flex;
+  align-items: center;
+  padding: 1vw;
+  img {
+    width: 60px;
+  }
 }
 .navBranch ul {
   display: flex;
@@ -123,7 +128,7 @@ export default {
   .navBranch {
     display: block;
     position: fixed;
-    top: 65px;
+    top: 70px;
     /*hidden navbar*/
     left: -250px;
     height: 100%;
@@ -132,11 +137,16 @@ export default {
     z-index: 99;
     background-color: var(--background-color);
     width: 30%;
+    padding-top:5vw;
   }
   .navBranch ul {
     flex-direction: column;
     .nav-Item {
-      padding: 2rem;
+      padding: 1rem;
+      margin: 1rem;
+    }
+    .nav-Item:hover{
+        border-bottom:2px var(--border-color) solid;
     }
   }
 }

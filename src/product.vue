@@ -16,7 +16,7 @@ export default {
   data: function () {
     return {
       scrollTop: '',
-      clientWidth:''
+      clientWidth: document.body.clientWidth 
     }
   },
   components: {
@@ -30,14 +30,17 @@ export default {
     window.onscroll = function () {
       _this.scrollTop =
         document.documentElement.scrollTop || document.body.scrollTop
-    }
-    window.onresize = function () {
-      _this.clientWidth =
-        window.screenWidth || document.body.clientWidth
+    };
+    window.onresize = function(){
+      return (() => {
+        window.screenWidth = document.body.clientWidth
+        _this.clientWidth = window.screenWidth
+      })()
     }
   },
   watch: {
-    clientWidth:function(){
+    clientWidth(val) {
+      this.clientWidth = val
       console.log(this.clientWidth)
     },
     scrollTop: function () {
@@ -59,6 +62,7 @@ export default {
       var categoryHeight = categoryLIst.offsetHeight
       if (this.scrollTop > categoryHeight) {
         if(this.clientWidth < 481) {
+          console.log(this.clienWidth)
           categoryLIst.style.backgroundColor = 'var(--background-color)'
           categoryLIst.style.position = 'fixed'
           categoryLIst.style.width = '100%'
@@ -70,7 +74,6 @@ export default {
           categoryLIst.style.top = '69px'
         }
       } else {
-        console.log(categoryHeight)
         categoryLIst.style.position = 'relative'
         categoryLIst.style.backgroundColor = 'var(--product-bg-color)'
         categoryLIst.style.width = '100%'

@@ -41,10 +41,10 @@ export default {
 
 <style>
 .CartButtomText {
-    width: 5vw;
-    height: 5vw;
+    width: 6vw;
+    height: 6vw;
     border-radius: 9999px;
-    font-size: 3vw;
+    font-size: 5vw;
     border: 1px solid var(--border-color);
     background-color: var(--background-color);
     position: relative;

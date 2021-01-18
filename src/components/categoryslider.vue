@@ -428,7 +428,7 @@ export default {
     .searcher{
       border: var(--border-color) 1px solid;
       margin: 1vw 2vw;
-      font-size: 2vw;
+      font-size: 1.5vw;
     }
 }
 .ProductItem {
@@ -473,12 +473,12 @@ export default {
 .laterSliderRWB {
   z-index: 3;
   position: fixed;
-  bottom: 14vw;
+  bottom: 16vw;
   right: 2vw;
-  width: 5vw;
-  height: 5vw;
+  width: 6vw;
+  height: 6vw;
   border-radius: 9999px;
-  font-size: 3vw;
+  font-size: 5vw;
   border: 1px solid var(--border-color);
   background-color: var(--background-color);
   display: none;

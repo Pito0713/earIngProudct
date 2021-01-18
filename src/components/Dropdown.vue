@@ -59,6 +59,8 @@ export default {
     font-size: 2.5vw;
 }
 .laterSeeDatatext{
+    display: flex;
+    align-items: top;
     height: 10%;
     margin: 4vw 4vw;
     padding: 1vw;
