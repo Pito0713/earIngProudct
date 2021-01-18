@@ -61,7 +61,7 @@ export default {
       //  var navFix = document.getElementById('navFix')
       var categoryHeight = categoryLIst.offsetHeight
       if (this.scrollTop > categoryHeight) {
-        if(this.clientWidth < 481) {
+        if(this.clientWidth < 425) {
           console.log(this.clienWidth)
           categoryLIst.style.backgroundColor = 'var(--background-color)'
           categoryLIst.style.position = 'fixed'
@@ -93,6 +93,13 @@ export default {
   text-align: center;
   color: var(--text-color);
   background-color: var(--product-bg-color)
+}
+a:link{
+  color:var(--text-color);
+}
+/* 已連結過 */
+a:visited{
+  color: var(--text-color);
 }
 .Cartbuttom {
   position: fixed;

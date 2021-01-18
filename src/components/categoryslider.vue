@@ -534,7 +534,7 @@ export default {
     }
 }
 
-@media screen and (max-width:481px){
+@media screen and (max-width:425px){
   .ProductItem {
       width: calc(50% - 30px);
     }
@@ -569,7 +569,7 @@ export default {
 }  
 
 }
-@media screen and (max-width:361px){
+@media screen and (max-width:375px){
    .ProductItem {
       width: calc(100% - 30px);
     }

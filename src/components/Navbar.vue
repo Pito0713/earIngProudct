@@ -128,7 +128,7 @@ export default {
   .navBranch {
     display: block;
     position: fixed;
-    top: 70px;
+    top: 69px;
     /*hidden navbar*/
     left: -250px;
     height: 100%;
