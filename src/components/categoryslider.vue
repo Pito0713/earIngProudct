@@ -71,16 +71,16 @@
             <div class="ProductImg"  @click="backData (Product[0])">
               <img :src="Product[7]" />
             </div>
-            <a style="font-size:1.2vw;"  @click="backData (Product[0])">{{Product[2]}}</a>
+            <a style="font-size:0.9rem;"  @click="backData (Product[0])">{{Product[2]}}</a>
             <br />
             <div style="padding-top:1vw; display:flex; justify-content: space-between;">
-              <a style="font-size:1.4vw;">NT: {{Product[3]}}</a>
+              <a style="font-size:0.8rem;">NT: {{Product[3]}}</a>
               <a style="float:right; margin:3px 5px;" >
                 <i class="far fa-heart" :class="{fas : Product[5] }" @click="laterSlider(Product[0])"></i>
               </a>
             </div>
           </div>
-          <a style="font-size:1vw">上架：{{Product[9]}}</a>
+          <a style="font-size:0.8rem">上架：{{Product[9]}}</a>
         </div>
       </div>
         <div class="productPage">
@@ -391,7 +391,7 @@ export default {
         border-bottom:1px var(--border-color) solid;
     }
     a{
-        font-size: 1.5vw;
+        font-size: 1rem;
     }
     .laterSlider{
       padding-top:2vw;
@@ -421,14 +421,10 @@ export default {
         background-color: #ffffff;
         border: var(--border-color) 1px solid;
         color: var(--plat-color);
-        a{
-          font-size: 1.2vw;
-        }
     }
     .searcher{
       border: var(--border-color) 1px solid;
       margin: 1vw 2vw;
-      font-size: 1.5vw;
     }
 }
 .ProductItem {
@@ -475,8 +471,8 @@ export default {
   position: fixed;
   bottom: 16vw;
   right: 2vw;
-  width: 6vw;
-  height: 6vw;
+  width: 8vw;
+  height: 8vw;
   border-radius: 9999px;
   font-size: 5vw;
   border: 1px solid var(--border-color);
@@ -485,14 +481,10 @@ export default {
   justify-content: center;
   align-items: center;
   .laterSliderLenght{
-    width: 3vw;
-    height: 3vw;
-    background-color:red;
-    color: white;
-    border-radius: 9999px;
+    color: red;
     position: absolute;
-    font-size: 2vw;
-    top:-40%;
+    font-size: 5vw;
+    top:-60%;
     right: -10%;
   }
 }
@@ -506,16 +498,6 @@ export default {
 @media screen and (max-width: 769px) {
     .ProductItem {
       width: calc(33% - 30px);
-    }
-    .ProductItemInfo{
-        a{
-            font-size: 1vw;
-        }
-    }
-    .pagination{
-        a{
-            font-size: 1.5vw;
-        }
     }
     .ProductImg {
       height: 18vw;
@@ -539,7 +521,7 @@ export default {
       width: calc(50% - 30px);
     }
   .filterButton Button{
-    font-size: 1vw;
+    font-size: 0.8rem;
     margin: 0.5vw;
   }
   .ProductImg {
@@ -553,9 +535,6 @@ export default {
     li{
       flex:20%;
       padding: 1.5vw 0;
-    }
-    a{
-        font-size: 1.5vw;
     }
     .laterSlider{
       display: none

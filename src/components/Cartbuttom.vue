@@ -41,8 +41,8 @@ export default {
 
 <style>
 .CartButtomText {
-    width: 6vw;
-    height: 6vw;
+    width: 8vw;
+    height: 8vw;
     border-radius: 9999px;
     font-size: 5vw;
     border: 1px solid var(--border-color);
@@ -53,14 +53,10 @@ export default {
     align-items: center;
 }
 .CartDataLenght{
-    width: 3vw;
-    height: 3vw;
-    background-color:red;
-    color: white;
-    border-radius: 9999px;
+    color: red;
     position: absolute;
-    font-size: 2vw;
-    top:-40%;
+    font-size: 5vw;
+    top:-60%;
     right: -10%;
 }
 </style>
