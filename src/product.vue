@@ -11,7 +11,6 @@ import Navbar from './components/Navbar.vue'
 import Production from './components/Production.vue'
 import Footer from './components/Footer.vue'
 import Cartbuttom from './components/Cartbuttom.vue'
-
 export default {
   data: function () {
     return {

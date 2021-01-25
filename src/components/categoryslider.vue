@@ -1,410 +1,455 @@
 <template>
   <div>
-    <div class="categoryslider" style="flex:20%" >
-        <div id='categoryLIst'>
-          <ul >
-            <li>
-                <a @click="CatchProductItem('All')">熱銷</a>
-            </li>
-            <li>
-                <a @click="filterNew()">新品</a>
-            </li>
-            <li>
-                <a @click="CatchProductItem('earing')">耳環</a>
-            </li>
-            <li>
-                <a @click="CatchProductItem('necklace')">項鍊</a>
-            </li>
-            <div class="laterSlider">
-              <a>待會再看</a><br />
-              <a v-if="CartInNothing">還沒有看到喜歡的！</a>
-              <div v-for="(Product,index) in cartData" :key="Product[1]+index">
-                <a style="font-size:1.2vw;"  @click="backData (Product[0])">{{Product[2]}}</a>
-              </div>
+    <div class="categoryslider" style="flex:20%">
+      <div id="categoryLIst">
+        <ul>
+          <li>
+            <a @click="CatchProductItem('All')">熱銷</a>
+          </li>
+          <li>
+            <a @click="filterNew()">新品</a>
+          </li>
+          <li>
+            <a @click="CatchProductItem('earing')">耳環</a>
+          </li>
+          <li>
+            <a @click="CatchProductItem('necklace')">項鍊</a>
+          </li>
+          <div class="laterSlider">
+            <a>待會名單</a>
+            <br />
+            <a v-if="!CartInNothing">還沒有看到喜歡的！</a>
+            <div v-for="(Product,index) in cartData" :key="Product[1]+index">
+              <a style="font-size:1.2vw;" @click="backData (Product[0])">{{Product[2]}}</a>
             </div>
-            
-            <div class="cartSlidertitle">
-              <a>購物車裡有</a>
+          </div>
+
+          <div class="cartSlidertitle">
+            <a>購物車裡有</a>
+          </div>
+          <div class="cartSlider">
+            <div v-for="(Product,index) in CartBackData" :key="Product[1]+index">
+              <a
+                style="font-size:1.2vw; text-decoration:underline"
+                @click="backData (Product[0])"
+              >{{Product[2]}}</a>
+              <a>{{Product[4]}}個</a>
+              <br />
             </div>
-            <div class="cartSlider">
-              <div v-for="(Product,index) in CartBackData" :key="Product[1]+index">
-                <a style="font-size:1.2vw; text-decoration:underline"  @click="backData (Product[0])">{{Product[2]}}</a>
-                <a>{{Product[4]}}個</a><br/>
-              </div>  
-            </div>
+          </div>
         </ul>
         <div class="laterSliderRWB">
-            <i class="far fa-heart" @click="DropDownOpen()">
-            </i>
-            <a class="laterSliderLenght">{{cartDataLength}}</a>
-          </div>
-        </div> 
-        <DropDown class="DropDown" :class="{ DropDownOpen: isOpen }"/>
+          <i class="far fa-heart" @click="DropDownOpen()"></i>
+          <a class="laterSliderLenght">{{cartDataLength}}</a>
+        </div>
       </div>
+
+      <div class="DropDown" :class="{ DropDownOpen: isOpen }">
+        <div class="PopUp">
+          <div class="closePopUp" @click="DropDownOpen()">
+            <a>X</a>
+          </div>
+          <div class="laterSeeData">
+            <div v-for="(Product,index) in cartData" :key="Product[1]+index" @click="backData (Product[0])">
+              <div class="laterSeeDatatext" >
+                <img :src="Product[7]" />
+                <a>{{Product[2]}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div style="background-color: var(--product-bg-color); flex:80%">
       <div class="filterButton">
         <div style="margin: 1vw 2vw">
-          <input class="searcher" style="margin:0vw;" placeholder="想要找..." v-model="searchValue">
+          <input class="searcher" style="margin:0vw;" placeholder="想要找..." v-model="searchValue" />
           <button style="margin:0vw;" @click="search ()">
             <a>搜尋</a>
           </button>
         </div>
         <div class="sortButton">
           <button @click="sortPrice()">
-            <a>
-              價錢高低
-            </a> 
+            <a>價錢高低</a>
           </button>
           <button>
-            <a>購買次數
-            </a>  
+            <a>購買次數</a>
           </button>
           <button @click="sortDate()">
-            <a>上架時間
-            </a>  
+            <a>上架時間</a>
           </button>
         </div>
       </div>
       <div class="Product" id="Product">
         <div v-for="(Product,index) in Products" :key="Product[1]+index" class="ProductItem">
           <div class="ProductItemInfo">
-            <div class="ProductImg"  @click="backData (Product[0])">
+            <div class="ProductImg" @click="backData (Product[0])">
               <img :src="Product[7]" />
             </div>
-            <a style="font-size:0.9rem;"  @click="backData (Product[0])">{{Product[2]}}</a>
+            <a style="font-size:0.9rem;" @click="backData (Product[0])">{{Product[2]}}</a>
             <br />
             <div style="padding-top:1vw; display:flex; justify-content: space-between;">
               <a style="font-size:0.8rem;">NT: {{Product[3]}}</a>
-              <a style="float:right; margin:3px 5px;" >
-                <i class="far fa-heart" :class="{fas : Product[5] }" @click="laterSlider(Product[0])"></i>
+              <a style="float:right; margin:3px 5px;">
+                <i
+                  class="far fa-heart"
+                  :class="{fas : Product[5] }"
+                  @click="laterSlider(Product[0])"
+                ></i>
               </a>
             </div>
           </div>
           <a style="font-size:0.8rem">上架：{{Product[9]}}</a>
         </div>
       </div>
-        <div class="productPage">
-          <div class="pagination">
-              <div @click="pagination(catchData,currentPage-1)">
-                <a>上一頁</a>
-              </div>
-              <div class="pagination" id="productPage">
-                <div v-for="pageTotal in pageTotals" :key="pageTotal[i]" @click="pagination(catchData,pageTotal)">
-                  <a>{{pageTotal}}</a>
-                </div>
-              </div>
-              <div @click="pagination(catchData,currentPage+1)">
-                <a>下一頁</a>
-              </div>
+      <div class="productPage">
+        <div class="pagination">
+          <div @click="pagination(catchData,currentPage-1)">
+            <a>上一頁</a>
+          </div>
+          <div class="pagination" id="productPage">
+            <div
+              v-for="pageTotal in pageTotals"
+              :key="pageTotal[i]"
+              @click="pagination(catchData,pageTotal)"
+            >
+              <a>{{pageTotal}}</a>
+            </div>
+          </div>
+          <div @click="pagination(catchData,currentPage+1)">
+            <a>下一頁</a>
           </div>
         </div>
       </div>
+    </div>
   </div>
 </template>
 
 <script>
-import $ from 'jquery'
-import DropDown from '../components/Dropdown.vue'
-const moment = require('moment')
+import $ from "jquery";
+const moment = require("moment");
 export default {
-  components: {
-    DropDown
-  },
-  data: function () {
+  data: function() {
     return {
       isOpen: false,
       Products: [],
       pageTotals: [],
-      paginationTotal: '',
-      currentPage: '',
+      paginationTotal: "",
+      currentPage: "",
       datapage: 12,
       catchData: [],
       sortRe: true,
-      searchValue: '',
+      searchValue: "",
       cartData: [],
       cartDataLength: 0,
       CartInNothing: true,
-      timer:'',
-      CartBackData: []
-    }
+      timer: "",
+      CartBackData: [],
+      GetlaterSeeData: [],
+      GetlaterSeeDatalenght: 0
+    };
   },
   watch: {
-    cartData: function () {
+    cartData: function() {
       if (this.cartData[0] === undefined) {
-        this.CartInNothing = !this.CartInNothing
+        this.CartInNothing = !this.CartInNothing;
       }
     }
   },
   methods: {
-    pagination (ProdcutData, currentPage) {
+    pagination(ProdcutData, currentPage) {
       if (currentPage > this.paginationTotal) {
-        document.getElementById('Product').innerHTML = ''
-        currentPage = this.paginationTotal
+        document.getElementById("Product").innerHTML = "";
+        currentPage = this.paginationTotal;
       } else {
-        document.getElementById('Product').innerHTML = ''
+        document.getElementById("Product").innerHTML = "";
       }
       if (currentPage <= 0) {
-        currentPage = 1
+        currentPage = 1;
       }
       // 全部資料總數
       // 當前比總頁數大的，當前等於總頁數 //防止剛好進位
       // 最小 （當前)1*(單頁資料)4 - 4(起始頁資料) + 1 起始至少為1
-      const minData = currentPage * this.datapage - this.datapage + 1
+      const minData = currentPage * this.datapage - this.datapage + 1;
       // 最大
-      const maxData = currentPage * this.datapage
+      const maxData = currentPage * this.datapage;
       // 當前頁面(1) 比 minData(例如：1) 大且又小於 maxData(例如：4) 就push進去新陣列。
       //    建立新陣列//
       for (this.i = 0; this.i <= ProdcutData.length; this.i++) {
         if (this.i >= minData && this.i <= maxData) {
-          this.Products.push(ProdcutData[this.i - 1])
+          this.Products.push(ProdcutData[this.i - 1]);
         }
       }
       if (this.currentPage < this.paginationTotal) {
         if (this.currentPage > 0) {
-          document.body.scrollTop = 0
+          document.body.scrollTop = 0;
         }
         // console.log(this.currentPage)
       }
-      this.currentPage = currentPage
+      this.currentPage = currentPage;
     },
-    pageSelect () {
-      const dataTotal = this.catchData.length
+    pageSelect() {
+      const dataTotal = this.catchData.length;
       // 總共有幾頁//
-      document.getElementById('productPage').innerHTML = ''
-      this.paginationTotal = Math.ceil(dataTotal / this.datapage)
+      document.getElementById("productPage").innerHTML = "";
+      this.paginationTotal = Math.ceil(dataTotal / this.datapage);
       for (this.i = 1; this.i <= this.paginationTotal; this.i++) {
-        this.pageTotals.push(this.i)
+        this.pageTotals.push(this.i);
       }
     },
-    CatchProductItem (Id) {
-      if (Id === 'All') {
-        this.catchData = this.ProdcutData.filter( //    用id 屬性篩選我要的
-          function (item) {
-            return item[0] !== '' // 篩掉空值
+    CatchProductItem(Id) {
+      if (Id === "All") {
+        this.catchData = this.ProdcutData.filter(
+          //    用id 屬性篩選我要的
+          function(item) {
+            return item[0] !== ""; // 篩掉空值
           }
-        )
+        );
       } else {
-        this.catchData = this.ProdcutData.filter( //    用id 屬性篩選我要的
-          function (item) {
-            return item[1] === Id
+        this.catchData = this.ProdcutData.filter(
+          //    用id 屬性篩選我要的
+          function(item) {
+            return item[1] === Id;
           }
-        )
+        );
       }
       for (let i = 0; i < this.catchData.length; i++) {
-        this.catchData[i][9] = moment(this.catchData[i][9]).format('MM/DD/YYYY')
-      }// 轉換日期
-      document.getElementById('Product').innerHTML = ''
-      this.pagination(this.catchData, 1) // 用抓到的資料帶回
-      this.pageSelect()
+        this.catchData[i][9] = moment(this.catchData[i][9]).format(
+          "MM/DD/YYYY"
+        );
+      } // 轉換日期
+      document.getElementById("Product").innerHTML = "";
+      this.pagination(this.catchData, 1); // 用抓到的資料帶回
+      this.pageSelect();
     },
-    sort0 () {
-      this.catchData.sort(function (a, b) {
-        return a[0] - b[0]
-      })
+    sort0() {
+      this.catchData.sort(function(a, b) {
+        return a[0] - b[0];
+      });
     },
-    sortPrice () {
+    sortPrice() {
       if (this.sortRe === true) {
-        this.catchData.sort(function (a, b) {
-          return a[3] - b[3]
-        })
+        this.catchData.sort(function(a, b) {
+          return a[3] - b[3];
+        });
         // console.log(this.catchData)
-        this.sortRe = !this.sortRe
+        this.sortRe = !this.sortRe;
       } else {
-        this.catchData.sort(function (a, b) {
-          return a[3] - b[3]
-        })
-        this.catchData.reverse()
+        this.catchData.sort(function(a, b) {
+          return a[3] - b[3];
+        });
+        this.catchData.reverse();
         // console.log(this.catchData)
-        this.sortRe = !this.sortRe
+        this.sortRe = !this.sortRe;
       }
       // console.log(this.sortRe)
-      document.getElementById('Product').innerHTML = ''
-      this.pagination(this.catchData, 1) // 用抓到的資料帶回
-      this.pageSelect()
-      this.sort0()
+      document.getElementById("Product").innerHTML = "";
+      this.pagination(this.catchData, 1); // 用抓到的資料帶回
+      this.pageSelect();
+      this.sort0();
     },
-    sortDate () {
+    sortDate() {
       if (this.sortRe === true) {
-        this.catchData.sort(function (a, b) {
-          return a[9] < b[9] ? 1 : -1
-        })
+        this.catchData.sort(function(a, b) {
+          return a[9] < b[9] ? 1 : -1;
+        });
         // console.log(this.catchData)
-        this.sortRe = !this.sortRe
+        this.sortRe = !this.sortRe;
       } else {
-        this.catchData.sort(function (a, b) {
-          return a[9] < b[9] ? 1 : -1
-        })
-        this.catchData.reverse()
+        this.catchData.sort(function(a, b) {
+          return a[9] < b[9] ? 1 : -1;
+        });
+        this.catchData.reverse();
         // console.log(this.catchData)
-        this.sortRe = !this.sortRe
+        this.sortRe = !this.sortRe;
       }
       // console.log(this.sortRe)
-      document.getElementById('Product').innerHTML = ''
-      this.pagination(this.catchData, 1) // 用抓到的資料帶回
-      this.pageSelect()
-      this.sort0()
+      document.getElementById("Product").innerHTML = "";
+      this.pagination(this.catchData, 1); // 用抓到的資料帶回
+      this.pageSelect();
+      this.sort0();
     },
-    filterNew () {
+    filterNew() {
       for (let i = 0; i < this.catchData.length; i++) {
-        var day1 = new Date(this.catchData[i][9].replace(/-/g, '/'))
-        var day2 = new Date() // 當前日期
-        var day = day2.getTime() - day1.getTime()
-        var time = parseInt(day / (1000 * 60 * 60 * 24))
-        this.catchData[i].push(time)
+        var day1 = new Date(this.catchData[i][9].replace(/-/g, "/"));
+        var day2 = new Date(); // 當前日期
+        var day = day2.getTime() - day1.getTime();
+        var time = parseInt(day / (1000 * 60 * 60 * 24));
+        this.catchData[i].push(time);
       }
-      this.catchData = this.catchData.filter(
-        function (item) {
-          return item[11] < 30 // 篩掉小於值
-        }
-      )
-      document.getElementById('Product').innerHTML = ''
-      this.pagination(this.catchData, 1) // 用抓到的資料帶回
-      this.pageSelect()
+      this.catchData = this.catchData.filter(function(item) {
+        return item[11] < 30; // 篩掉小於值
+      });
+      document.getElementById("Product").innerHTML = "";
+      this.pagination(this.catchData, 1); // 用抓到的資料帶回
+      this.pageSelect();
     },
-    search () {
-      this.catchData = this.ProdcutData
+    search() {
+      this.catchData = this.ProdcutData;
       var searched = this.catchData.map(obj => {
-        if (Object.keys(obj).some(()=> obj[2].toString().indexOf(this.searchValue) !== -1)) {
+        if (
+          Object.keys(obj).some(
+            () => obj[2].toString().indexOf(this.searchValue) !== -1
+          )
+        ) {
           // 用陣列提供的map函式，遍歷出每筆資料
           // 由於object無map、filter函式，使用Object.keys取得object裡的每個property以遍歷每一object裡的內容。而Object提供some函式，只要其中一筆內容符合則回傳true
           // 接著使用obj[property] 取得該物件屬性內的值。
-          return obj
+          return obj;
         }
-      })
-      var Realsearched = searched.filter(function (obj) {
-        return obj !== undefined
-      })
-      this.catchData = Realsearched
+      });
+      var Realsearched = searched.filter(function(obj) {
+        return obj !== undefined;
+      });
+      this.catchData = Realsearched;
       // console.log(this.catchData)
-      document.getElementById('Product').innerHTML = ''
-      this.pagination(this.catchData, 1)
-      this.pageSelect()
+      document.getElementById("Product").innerHTML = "";
+      this.pagination(this.catchData, 1);
+      this.pageSelect();
     },
-    laterSlider (i) {
+    laterSlider(i) {
       if (this.cartData[0] === undefined) {
-        this.CartInNothing = !this.CartInNothing
+        this.CartInNothing = !this.CartInNothing;
       }
-      this.ProdcutData[i][5] = !this.ProdcutData[i][5]
-      this.cartData = this.ProdcutData.filter(
-        function (item) {
-          return item[5] === true // 篩掉出true
-        }
-      )
+      this.ProdcutData[i][5] = !this.ProdcutData[i][5];
+      this.cartData = this.ProdcutData.filter(function(item) {
+        return item[5] === true; // 篩掉出true
+      });
       this.cartDataLength = this.cartData.length;
-      console.log(this.cartDataLength)
-      var data = [[
-        this.ProdcutData[i][5],
-      ]]
-      console.log(data)
-      var parameter = {}
+      console.log(this.cartDataLength);
+      var data = [[this.ProdcutData[i][5]]];
+      console.log(data);
+      var parameter = {};
       parameter = {
-        url: 'https://docs.google.com/spreadsheets/d/1nXquMbDuBjMx2Eo7qO1XBKNrJBm8xNGRGexuOFozlts/edit#gid=0',
-        name: '工作表1',
+        url:
+          "https://docs.google.com/spreadsheets/d/1nXquMbDuBjMx2Eo7qO1XBKNrJBm8xNGRGexuOFozlts/edit#gid=0",
+        name: "工作表1",
         data: data.toString(),
-        row: this.ProdcutData[i][0]+2,
-      }
-      $.get('https://script.google.com/macros/s/AKfycbx9qv7vOKGzbVF57XCjabuTbap2Pigsp34ywUAG83mH55iejwpE/exec', parameter)
-      this.pageSelect() // 重新載入
+        row: this.ProdcutData[i][0] + 2
+      };
+      $.get(
+        "https://script.google.com/macros/s/AKfycbx9qv7vOKGzbVF57XCjabuTbap2Pigsp34ywUAG83mH55iejwpE/exec",
+        parameter
+      );
+      this.pageSelect(); // 重新載入
     },
-    getlaterSeeData(){
-      this.cartData = this.ProdcutData.filter(
-        function (item) {
-          return item[5] === true // 篩掉出true
-        }
-      )
+    getlaterSeeData() {
+      this.cartData = this.ProdcutData.filter(function(item) {
+        return item[5] === true; // 篩掉出true
+      });
       this.cartDataLength = this.cartData.length;
     },
-    backData (i) {
-      var data = [[
-        this.catchData[i][0],
-        this.catchData[i][1],
-        this.catchData[i][2],
-        this.catchData[i][3],
-        this.catchData[i][4],
-        this.catchData[i][5],
-        this.catchData[i][6],
-        this.catchData[i][7],
-        this.catchData[i][8],
-        this.catchData[i][9],
-        this.catchData[i][10]
-      ]]
-      var parameter = {}
+    backData(i) {
+      var data = [
+        [
+          this.catchData[i][0],
+          this.catchData[i][1],
+          this.catchData[i][2],
+          this.catchData[i][3],
+          this.catchData[i][4],
+          this.catchData[i][5],
+          this.catchData[i][6],
+          this.catchData[i][7],
+          this.catchData[i][8],
+          this.catchData[i][9],
+          this.catchData[i][10]
+        ]
+      ];
+      var parameter = {};
       parameter = {
-        url: 'https://docs.google.com/spreadsheets/d/1LhZ_9DO6JNX2Q7DO_HKRVDoGtyRGEp2ne-m_aIlYQq4/edit#gid=0',
-        name: '工作表1',
+        url:
+          "https://docs.google.com/spreadsheets/d/1LhZ_9DO6JNX2Q7DO_HKRVDoGtyRGEp2ne-m_aIlYQq4/edit#gid=0",
+        name: "工作表1",
         data: data.toString(),
         row: this.catchData[i][0],
         column: this.catchData[i].length
-      }
-      $.get('https://script.google.com/macros/s/AKfycbzKEwZkfPc610W7d8w8cktq6OO2R8Tfw6GgmHe1aZVGDbkXlGQ/exec', parameter)
-      this.timer = setTimeout(()=>{  //延遲讓後台更新
-        location.href="https://pito0713.github.io/earingSinglePage/"
-      },1000);
+      };
+      $.get(
+        "https://script.google.com/macros/s/AKfycbzKEwZkfPc610W7d8w8cktq6OO2R8Tfw6GgmHe1aZVGDbkXlGQ/exec",
+        parameter
+      );
+      this.timer = setTimeout(() => {
+        //延遲讓後台更新
+        location.href = "https://pito0713.github.io/earingSinglePage/";
+      }, 500);
     },
-    CartBackData1 () {
-      this.CartBackData = this.CartBackData.filter( //    用id 屬性篩選我要的
-          function (item) {
-            return item[4] !== '' // 篩掉數量0的空值
-          }
-      )    
-      console.log(this.CartBackData)
+    CartBackData1() {
+      this.CartBackData = this.CartBackData.filter(
+        //    用id 屬性篩選我要的
+        function(item) {
+          return item[4] !== ""; // 篩掉數量0的空值
+        }
+      );
+      console.log(this.CartBackData);
     },
-    DropDownOpen (){
-      this.isOpen = !this.isOpen
+    DropDownOpen() {
+      this.isOpen = !this.isOpen;
     }
   },
-  mounted () {
-    fetch('https://script.google.com/macros/s/AKfycbwzGM7BJ8SnGD626ebzQi3xGdBsJzUlOSdiDIkMmBhplN65FtQ/exec')
+  mounted() {
+    fetch(
+      "https://script.google.com/macros/s/AKfycbwzGM7BJ8SnGD626ebzQi3xGdBsJzUlOSdiDIkMmBhplN65FtQ/exec"
+    )
       .then(res => {
-        return res.json()
+        return res.json();
       })
       .then(Products => {
-        this.ProdcutData = Products
-        this.CatchProductItem('All')
-        this.getlaterSeeData()
-      })
-    fetch('https://script.google.com/macros/s/AKfycbxLQARlHh9k7LbV8-ORSmVjIYAJtgphhKXFS0e6ypXmpAWJX8cV/exec')
+        this.ProdcutData = Products;
+        this.CatchProductItem("All");
+        this.getlaterSeeData();
+      });
+    fetch(
+      "https://script.google.com/macros/s/AKfycbxLQARlHh9k7LbV8-ORSmVjIYAJtgphhKXFS0e6ypXmpAWJX8cV/exec"
+    )
       .then(res => {
-        return res.json()
+        return res.json();
       })
       .then(CartBackData => {
-        this.CartBackData  = CartBackData
-        this.CartBackData1()
-      })  
+        this.CartBackData = CartBackData;
+        this.CartBackData1();
+      });
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
-.categoryslider{
-    display: block;
-    position: relative;
-    padding-top:1vw;
-    z-index: 1;
-    ul{
-      background-color: var(--product-bg-color);
-    }
-    li{
-        padding: 1.5vw 0;
-    }
-    li:hover{
-        border-bottom:1px var(--border-color) solid;
-    }
+.categoryslider {
+  display: block;
+  position: relative;
+  padding-top: 1vw;
+  z-index: 1;
+  height: 100%;
+  ul {
+    background-color: var(--product-bg-color);
+  }
+  li {
+    padding: 1.5vw 0;
     a{
-        font-size: 1rem;
+      font-size: 1.2rem
     }
-    .laterSlider{
-      padding-top:2vw;
-      border-top:1px solid var(--border-color);
-      background-color: var(--cart-bg-color)
-    }
-    .cartSlidertitle{
-      margin-top:2vw;
-    }
-    .cartSlider{
-      width: 100%;
-      overflow: auto;
-    }
+  }
+  li:hover {
+    border-bottom: 1px var(--border-color) solid;
+  }
+  a {
+    font-size: 1rem;
+  }
+  .laterSlider {
+    height: 100px;
+    padding-top: 2vw;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--cart-bg-color);
+    overflow: auto;
+  }
+  .cartSlidertitle {
+    margin-top: 2vw;
+  }
+  .cartSlider {
+    width: 100%;
+    height: 80px;
+    overflow: auto;
+  }
 }
 .Product {
   display: flex;
@@ -412,20 +457,24 @@ export default {
   flex-wrap: wrap;
 }
 .filterButton {
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-    background-color: var(--background-color);
-    button {
-        margin: 1vw;
-        background-color: #ffffff;
-        border: var(--border-color) 1px solid;
-        color: var(--plat-color);
-    }
-    .searcher{
-      border: var(--border-color) 1px solid;
-      margin: 1vw 2vw;
-    }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--background-color);
+  a{
+    font-size: 1rem;
+  }
+  button {
+    margin: 1vw;
+    background-color: #ffffff;
+    border: var(--border-color) 1px solid;
+    color: var(--plat-color);
+  }
+  .searcher {
+    border: var(--border-color) 1px solid;
+    margin: 1vw 2vw;
+    font-size: 0.8rem;
+  }
 }
 .ProductItem {
   display: flex;
@@ -442,29 +491,29 @@ export default {
 .ProductItemInfo {
   text-align: start;
   color: var(--product-color);
-  overflow:hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
-  a{
-    white-space:nowrap;
+  a {
+    white-space: nowrap;
   }
 }
-.productPage{
-    display: flex;
-    justify-content: center;
-    .pagination{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        a{
-            padding: 2vw;
-        }
-    }
-}
-.ProductImg {
-    height: 20vw;
+.productPage {
+  display: flex;
+  justify-content: center;
+  .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
+    a {
+      padding: 2vw;
+    }
+  }
+}
+.ProductImg {
+  height: 20vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .laterSliderRWB {
   z-index: 3;
@@ -480,81 +529,123 @@ export default {
   display: none;
   justify-content: center;
   align-items: center;
-  .laterSliderLenght{
+  .laterSliderLenght {
     color: red;
     position: absolute;
     font-size: 5vw;
-    top:-60%;
+    top: -60%;
     right: -10%;
   }
 }
-.DropDown{
+.DropDown {
   display: none;
 }
-.DropDownOpen{
+.DropDownOpen {
   display: block !important;
 }
-
-@media screen and (max-width: 769px) {
-    .ProductItem {
-      width: calc(33% - 30px);
-    }
-    .ProductImg {
-      height: 18vw;
-    }
-    .cartSlidertitle {
-      display: none;
-    }
-    .cartSlider{
-      display:none
-    }
-    .laterSlider {
-      display: none;
-    }
-    .laterSliderRWB {
-      display: flex;
-    }
+.PopUp {
+  position: fixed;
+  display: block;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
 }
-
-@media screen and (max-width:425px){
+.closePopUp {
+  position: absolute;
+  left: 80%;
+  top:11%;
+  display: block;
+  a {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--background-color)
+  }
+}
+.laterSeeData {
+  margin: 30% 20%;
+  width: 60%;
+  height: 70%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  position: absolute;
+  overflow: auto
+}
+.laterSeeDatatext {
+  display: flex;
+  align-items: top;
+  height: 10%;
+  margin: 4vw 4vw;
+  padding: 1vw;
+  border-bottom: 1px solid var(--primary-color);
+}
+.laterSeeDatatext a {
+  padding: 0 4vw;
+  font-size: 0.5rem;
+}
+.laterSeeDatatext img {
+  max-width: 20%;
+  max-height: 20%;
+}
+@media screen and (max-width: 769px) {
   .ProductItem {
-      width: calc(50% - 30px);
-    }
-  .filterButton Button{
+    width: calc(33% - 30px);
+  }
+  .ProductImg {
+    height: 18vw;
+  }
+  .cartSlidertitle {
+    display: none;
+  }
+  .cartSlider {
+    display: none;
+  }
+  .laterSlider {
+    display: none;
+  }
+  .laterSliderRWB {
+    display: flex;
+  }
+}
+@media screen and (max-width: 425px) {
+  .ProductItem {
+    width: calc(50% - 30px);
+  }
+  .filterButton button {
     font-size: 0.8rem;
     margin: 0.5vw;
   }
   .ProductImg {
-      height: 25vw;
-    }
-  .categoryslider{
-    ul{
+    height: 25vw;
+  }
+  .categoryslider {
+    ul {
       display: flex;
       justify-content: space-between;
     }
-    li{
-      flex:20%;
+    li {
+      flex: 20%;
       padding: 1.5vw 0;
     }
-    .laterSlider{
-      display: none
-    }
-    .cartSlider{
+    .laterSlider {
       display: none;
     }
-    .cartSlidertitle{
+    .cartSlider {
       display: none;
     }
-}  
-
+    .cartSlidertitle {
+      display: none;
+    }
+  }
 }
-@media screen and (max-width:375px){
-   .ProductItem {
-      width: calc(100% - 30px);
-    }
-    .ProductImg {
-      height: auto;
-    }
-
+@media screen and (max-width: 375px) {
+  .ProductItem {
+    width: calc(100% - 30px);
+  }
+  .ProductImg {
+    height: auto;
+  }
 }
 </style>
