@@ -9,7 +9,8 @@
           <a href="https://pito0713.github.io/earIngProudct">耳環 Earrings</a>
         </li>
         <li class="nav-Item">購物車 Cart
-          <a v-if="CartBackDatalenght" class="CartDataLenght"></a>
+          <a v-if="CartBackDatalenght" class="CartDataLenght"
+          href="https://pito0713.github.io/carcartEaring/"></a>
         </li>
         <li class="nav-Item">會員 mender</li>
       </ul>
