@@ -2,42 +2,29 @@
   <div>
     <div class="categoryslider" style="flex:20%">
       <div id="categoryLIst">
-        <ul>
-          <li>
-            <a @click="CatchProductItem('All')">熱銷</a>
-          </li>
-          <li>
-            <a @click="filterNew()">新品</a>
-          </li>
-          <li>
-            <a @click="CatchProductItem('earing')">耳環</a>
-          </li>
-          <li>
-            <a @click="CatchProductItem('necklace')">項鍊</a>
-          </li>
-          <div class="laterSlider">
-            <a>待會名單</a>
-            <br />
-            <a v-if="!CartInNothing">還沒有看到喜歡的！</a>
-            <div v-for="(Product,index) in cartData" :key="Product[1]+index">
-              <a style="font-size:1.2vw;" @click="backData (Product[0])">{{Product[2]}}</a>
-            </div>
+        <div class="laterSlider">
+          <a>待會名單</a>
+          <br />
+          <a v-if="!CartInNothing">還沒有看到喜歡的！</a>
+          <div v-for="(Product,index) in cartData" :key="Product[1]+index">
+            <a style="font-size:1.2vw;" @click="backData (Product[0])">{{Product[2]}}</a>
           </div>
+        </div>
 
-          <div class="cartSlidertitle">
-            <a>購物車裡有</a>
+        <div class="cartSlidertitle">
+          <a>購物車裡有</a>
+        </div>
+        <div class="cartSlider">
+          <div v-for="(Product,index) in CartBackData" :key="Product[1]+index">
+            <a
+              style="font-size:1.2vw; text-decoration:underline"
+              @click="backData (Product[0])"
+            >{{Product[2]}}</a>
+            <a>{{Product[4]}}個</a>
+            <br />
           </div>
-          <div class="cartSlider">
-            <div v-for="(Product,index) in CartBackData" :key="Product[1]+index">
-              <a
-                style="font-size:1.2vw; text-decoration:underline"
-                @click="backData (Product[0])"
-              >{{Product[2]}}</a>
-              <a>{{Product[4]}}個</a>
-              <br />
-            </div>
-          </div>
-        </ul>
+        </div>
+
         <div class="laterSliderRWB">
           <i class="far fa-heart" @click="DropDownOpen()"></i>
           <a class="laterSliderLenght">{{cartDataLength}}</a>
@@ -50,8 +37,12 @@
             <a>X</a>
           </div>
           <div class="laterSeeData">
-            <div v-for="(Product,index) in cartData" :key="Product[1]+index" @click="backData (Product[0])">
-              <div class="laterSeeDatatext" >
+            <div
+              v-for="(Product,index) in cartData"
+              :key="Product[1]+index"
+              @click="backData (Product[0])"
+            >
+              <div class="laterSeeDatatext">
                 <img :src="Product[7]" />
                 <a>{{Product[2]}}</a>
               </div>
@@ -62,6 +53,22 @@
     </div>
 
     <div style="background-color: var(--product-bg-color); flex:80%">
+      <div>
+        <ul class="categoryLIst">
+          <li>
+            <a @click="CatchProductItem('All')">熱銷</a>
+          </li>
+          <li>
+            <a @click="filterNew()">新品</a>
+          </li>
+          <li>
+            <a @click="CatchProductItem('earing')">耳環</a>
+          </li>
+          <li>
+            <a @click="CatchProductItem('necklace')">項鍊</a>
+          </li>
+        </ul>
+      </div>
       <div class="filterButton">
         <div style="margin: 1vw 2vw">
           <input class="searcher" style="margin:0vw;" placeholder="想要找..." v-model="searchValue" />
@@ -87,10 +94,10 @@
             <div class="ProductImg" @click="backData (Product[0])">
               <img :src="Product[7]" />
             </div>
-            <a style="font-size:0.9rem;" @click="backData (Product[0])">{{Product[2]}}</a>
+            <a  @click="backData (Product[0])">{{Product[2]}}</a>
             <br />
             <div style="padding-top:1vw; display:flex; justify-content: space-between;">
-              <a style="font-size:0.8rem;">NT: {{Product[3]}}</a>
+              <a >NT: {{Product[3]}}</a>
               <a style="float:right; margin:3px 5px;">
                 <i
                   class="far fa-heart"
@@ -317,19 +324,20 @@ export default {
         return item[5] === true; // 篩掉出true
       });
       this.cartDataLength = this.cartData.length;
-      console.log(this.cartDataLength);
-      var data = [[this.ProdcutData[i][5]]];
-      console.log(data);
+      //console.log(this.cartDataLength);
+      var data = [this.ProdcutData[i][5]];
+      //console.log(data);
       var parameter = {};
       parameter = {
         url:
           "https://docs.google.com/spreadsheets/d/1nXquMbDuBjMx2Eo7qO1XBKNrJBm8xNGRGexuOFozlts/edit#gid=0",
         name: "工作表1",
         data: data.toString(),
-        row: this.ProdcutData[i][0] + 2
+        row: this.ProdcutData[i][0]
       };
       $.get(
-        "https://script.google.com/macros/s/AKfycbx9qv7vOKGzbVF57XCjabuTbap2Pigsp34ywUAG83mH55iejwpE/exec",
+        //"https://script.google.com/macros/s/AKfycbx9qv7vOKGzbVF57XCjabuTbap2Pigsp34ywUAG83mH55iejwpE/exec",
+        "https://script.google.com/macros/s/AKfycbwzGM7BJ8SnGD626ebzQi3xGdBsJzUlOSdiDIkMmBhplN65FtQ/exec",
         parameter
       );
       this.pageSelect(); // 重新載入
@@ -381,7 +389,7 @@ export default {
           return item[4] !== ""; // 篩掉數量0的空值
         }
       );
-      console.log(this.CartBackData);
+      //console.log(this.CartBackData);
     },
     DropDownOpen() {
       this.isOpen = !this.isOpen;
@@ -417,39 +425,40 @@ export default {
 .categoryslider {
   display: block;
   position: relative;
-  padding-top: 1vw;
   z-index: 1;
   height: 100%;
-  ul {
-    background-color: var(--product-bg-color);
-  }
-  li {
-    padding: 1.5vw 0;
-    a{
-      font-size: 1.2rem
-    }
-  }
-  li:hover {
-    border-bottom: 1px var(--border-color) solid;
-  }
-  a {
-    font-size: 1rem;
-  }
   .laterSlider {
-    height: 100px;
-    padding-top: 2vw;
+    height: 200px;
+    padding-top: 2rem;
     border-top: 1px solid var(--border-color);
     background-color: var(--cart-bg-color);
     overflow: auto;
   }
   .cartSlidertitle {
-    margin-top: 2vw;
+    margin-top: 2rem;
   }
   .cartSlider {
     width: 100%;
-    height: 80px;
+    height: 200px;
     overflow: auto;
   }
+}
+.categoryLIst {
+  display: flex;
+  align-items: center;
+  ul {
+    background-color: var(--product-bg-color);
+  }
+  li {
+    padding: 1rem 2rem;
+    a {
+      font-size: 1.2vw;
+    }
+  }
+  li:hover {
+    border-bottom: 1px var(--border-color) solid;
+  }
+ 
 }
 .Product {
   display: flex;
@@ -461,8 +470,8 @@ export default {
   justify-content: space-between;
   align-items: center;
   background-color: var(--background-color);
-  a{
-    font-size: 1rem;
+  a {
+    font-size: 1vw;
   }
   button {
     margin: 1vw;
@@ -473,7 +482,7 @@ export default {
   .searcher {
     border: var(--border-color) 1px solid;
     margin: 1vw 2vw;
-    font-size: 0.8rem;
+    font-size:  1vw;
   }
 }
 .ProductItem {
@@ -556,12 +565,12 @@ export default {
 .closePopUp {
   position: absolute;
   left: 80%;
-  top:11%;
+  top: 11%;
   display: block;
   a {
     font-size: 1.5rem;
     font-weight: 900;
-    color: var(--background-color)
+    color: var(--background-color);
   }
 }
 .laterSeeData {
@@ -571,7 +580,7 @@ export default {
   background-color: var(--background-color);
   color: var(--text-color);
   position: absolute;
-  overflow: auto
+  overflow: auto;
 }
 .laterSeeDatatext {
   display: flex;
@@ -621,14 +630,6 @@ export default {
     height: 25vw;
   }
   .categoryslider {
-    ul {
-      display: flex;
-      justify-content: space-between;
-    }
-    li {
-      flex: 20%;
-      padding: 1.5vw 0;
-    }
     .laterSlider {
       display: none;
     }
@@ -638,6 +639,15 @@ export default {
     .cartSlidertitle {
       display: none;
     }
+  }
+  .categoryLIst {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  a{
+      font-size: 2rem;
+    };
+
   }
 }
 @media screen and (max-width: 375px) {

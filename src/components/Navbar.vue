@@ -1,18 +1,18 @@
 <template>
   <nav class="nav">
-    <div class="logo">
-      <img src="../img/logo.png" alt="logo"/>
-    </div>
+    <a class="logo"  href='https://pito0713.github.io/Demo/'>
+      <img src="../img/logo.png" alt="logo" />
+    </a>
     <div class="navBranch" :class="{ navOps: isOpen }">
       <ul>
         <li class="nav-Item">
           <a href="https://pito0713.github.io/earIngProudct">耳環 Earrings</a>
         </li>
-        <li class="nav-Item">購物車 Cart
+        <li class="nav-Item"><a href="https://pito0713.github.io/carcartEaring/">
+        購物車 Cart</a>
           <a v-if="CartBackDatalenght" class="CartDataLenght"
           href="https://pito0713.github.io/carcartEaring/"></a>
         </li>
-        <li class="nav-Item">會員 mender</li>
       </ul>
     </div>
     <!--Navburger-->
@@ -49,7 +49,7 @@ export default {
       } else {
         this.CartBackDatalenght =false
       }
-      console.log(this.CartBackDatalenght)
+      //console.log(this.CartBackDatalenght)
       }
   },
   mounted () {
@@ -80,7 +80,7 @@ export default {
 .logo{
   display: flex;
   align-items: center;
-  padding: 5px;
+  margin: 0.7rem;
   img {
     width: 60px;
   }
@@ -129,7 +129,7 @@ export default {
   .navBranch {
     display: block;
     position: fixed;
-    top: 70px;
+    top: 82px;
     /*hidden navbar*/
     left: -250px;
     height: 100%;

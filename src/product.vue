@@ -40,7 +40,7 @@ export default {
   watch: {
     clientWidth(val) {
       this.clientWidth = val
-      console.log(this.clientWidth)
+      //console.log(this.clientWidth)
     },
     scrollTop: function () {
       var nav = document.getElementById('nav')
@@ -61,7 +61,7 @@ export default {
       var categoryHeight = categoryLIst.offsetHeight
       if (this.scrollTop > categoryHeight) {
         if(this.clientWidth < 425) {
-          console.log(this.clienWidth)
+          //console.log(this.clienWidth)
           categoryLIst.style.backgroundColor = 'var(--background-color)'
           categoryLIst.style.position = 'fixed'
           categoryLIst.style.width = '100%'

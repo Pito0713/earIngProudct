@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="CartButtomText">
-        <a><i class="fas fa-shopping-cart"></i></a>
+        <a href="https://pito0713.github.io/carcartEaring/"><i class="fas fa-shopping-cart"></i></a>
         <a class="CartDataLenght">{{CartBackDatalenght}}</a>
     </div>
   </div>
