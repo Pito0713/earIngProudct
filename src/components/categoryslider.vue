@@ -360,8 +360,7 @@ export default {
           this.catchData[i][6],
           this.catchData[i][7],
           this.catchData[i][8],
-          this.catchData[i][9],
-          this.catchData[i][10]
+          this.catchData[i][9]
         ]
       ];
       var parameter = {};
