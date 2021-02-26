@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="categoryslider" style="flex:20%">
+    <div class="categoryslider">
       <div id="categoryLIst">
         <div class="laterSlider">
           <a>待會名單</a>
@@ -52,7 +52,7 @@
       </div>
     </div>
 
-    <div style="background-color: var(--product-bg-color); flex:80%">
+    <div class="Productslider">
       <div>
         <ul class="categoryLIst">
           <li>
@@ -156,7 +156,7 @@ export default {
   },
   watch: {
     cartData: function() {
-      let vm = this
+      let vm = this;
       if (vm.cartData[0] === undefined) {
         vm.CartInNothing = !vm.CartInNothing;
       }
@@ -260,7 +260,7 @@ export default {
       if (this.sortRe === true) {
         this.catchData.sort(function(a, b) {
           return a[9] < b[9] ? 1 : -1; //用天數比較 小於1天 或 大於1天
-         });
+        });
         // console.log(this.catchData)
         this.sortRe = !this.sortRe;
       } else {
@@ -289,7 +289,6 @@ export default {
       }
       this.catchData = this.catchData.filter(function(item) {
         return item[10] < 150; // 篩掉大於值180天
-        
       });
       //console.log(this.catchData)
       document.getElementById("Product").innerHTML = "";
@@ -297,7 +296,7 @@ export default {
       this.pageSelect();
     },
     search() {
-      let vm = this
+      let vm = this;
       vm.catchData = vm.ProdcutData;
       var searched = vm.catchData.map(obj => {
         if (
@@ -312,9 +311,9 @@ export default {
         }
       });
       var Realsearched = searched.filter(function(obj) {
-        return obj !== undefined; 
+        return obj !== undefined;
       });
-      
+
       vm.catchData = Realsearched;
       // console.log(this.catchData)
       document.getElementById("Product").innerHTML = "";
@@ -322,7 +321,7 @@ export default {
       this.pageSelect();
     },
     laterSlider(i) {
-      let vm = this
+      let vm = this;
       if (vm.cartData[0] === undefined) {
         vm.CartInNothing = !vm.CartInNothing;
       }
@@ -355,7 +354,7 @@ export default {
       this.cartDataLength = this.cartData.length;
     },
     backData(i) {
-      let vm = this
+      let vm = this;
       var data = [
         [
           vm.catchData[i][0],
@@ -429,6 +428,7 @@ export default {
 
 <style scoped lang="scss">
 .categoryslider {
+  flex: 20%;
   display: block;
   position: relative;
   z-index: 1;
@@ -470,13 +470,17 @@ export default {
   position: relative;
   flex-wrap: wrap;
 }
+.Productslider {
+  background-color: var(--product-bg-color);
+  flex: 80%;
+}
 .filterButton {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: var(--background-color);
   a {
-    font-size: 1vw;
+    font-size: 1rem;
   }
   button {
     margin: 1vw;
@@ -487,7 +491,7 @@ export default {
   .searcher {
     border: var(--border-color) 1px solid;
     margin: 1vw 2vw;
-    font-size: 1vw;
+    font-size: 1rem;
   }
 }
 .ProductItem {
@@ -613,45 +617,46 @@ export default {
   .laterSliderRWB {
     display: flex;
   }
-}
-@media screen and (max-width: 425px) {
-  .ProductItem {
-    width: calc(50% - 30px);
-  }
-  .filterButton button {
-    font-size: 0.8rem;
-    margin: 0.5vw;
-  }
-  .ProductImg {
-    height: 25vw;
-  }
   .categoryslider {
-    .laterSlider {
-      display: none;
-    }
-    .cartSlider {
-      display: none;
-    }
-    .cartSlidertitle {
-      display: none;
-    }
+    flex: 0%;
   }
-  .categoryLIst {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    a {
-      font-size: 1rem;
-    }
+  .Productslider {
+    flex: 100%;
   }
-   .cartSlidertitle {
+  .laterSlider {
     display: none;
   }
   .cartSlider {
     display: none;
   }
-  .laterSlider {
+  .cartSlidertitle {
     display: none;
+  }
+}
+@media screen and (max-width: 425px) {
+  .ProductItem {
+    width: calc(50% - 30px);
+  }
+  .filterButton {
+    a {
+      font-size: 0.8rem;
+    }
+    button {
+      margin: 0.5vw;
+    }
+    .searcher {
+      border: var(--border-color) 1px solid;
+      margin: 0.5vw 1vw;
+      font-size: 0.9rem;
+    }
+  }
+  .ProductImg {
+    height: 25vw;
+  }
+  .categoryLIst {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 @media screen and (max-width: 375px) {
@@ -661,8 +666,5 @@ export default {
   .ProductImg {
     height: auto;
   }
-  a {
-      font-size: 1rem;
-    }
 }
 </style>

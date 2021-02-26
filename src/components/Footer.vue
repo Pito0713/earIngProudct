@@ -32,7 +32,7 @@
     animation-duration: 4s;
     animation-iteration-count: infinite;
     a {
-      font-size: 1rem;
+      font-size: 2rem;
     }
     a:visited {
       color: var(--text-color);
