@@ -80,9 +80,6 @@
           <button @click="sortPrice()">
             <a>價錢高低</a>
           </button>
-          <button>
-            <a>購買次數</a>
-          </button>
           <button @click="sortDate()">
             <a>上架時間</a>
           </button>
@@ -94,10 +91,10 @@
             <div class="ProductImg" @click="backData (Product[0])">
               <img :src="Product[7]" />
             </div>
-            <a  @click="backData (Product[0])">{{Product[2]}}</a>
+            <a @click="backData (Product[0])">{{Product[2]}}</a>
             <br />
             <div style="padding-top:1vw; display:flex; justify-content: space-between;">
-              <a >NT: {{Product[3]}}</a>
+              <a>NT: {{Product[3]}}</a>
               <a style="float:right; margin:3px 5px;">
                 <i
                   class="far fa-heart"
@@ -159,8 +156,9 @@ export default {
   },
   watch: {
     cartData: function() {
-      if (this.cartData[0] === undefined) {
-        this.CartInNothing = !this.CartInNothing;
+      let vm = this
+      if (vm.cartData[0] === undefined) {
+        vm.CartInNothing = !vm.CartInNothing;
       }
     }
   },
@@ -230,37 +228,39 @@ export default {
       this.pagination(this.catchData, 1); // 用抓到的資料帶回
       this.pageSelect();
     },
-    sort0() {
+    sort() {
       this.catchData.sort(function(a, b) {
+        //重新排列
         return a[0] - b[0];
       });
     },
     sortPrice() {
       if (this.sortRe === true) {
         this.catchData.sort(function(a, b) {
+          //重新排列價錢
           return a[3] - b[3];
         });
         // console.log(this.catchData)
-        this.sortRe = !this.sortRe;
+        this.sortRe = !this.sortRe; //用true false來設定 大到小或小到大
       } else {
         this.catchData.sort(function(a, b) {
           return a[3] - b[3];
         });
         this.catchData.reverse();
         // console.log(this.catchData)
-        this.sortRe = !this.sortRe;
+        this.sortRe = !this.sortRe; //用true false來設定 大到小或小到大
       }
       // console.log(this.sortRe)
-      document.getElementById("Product").innerHTML = "";
+      document.getElementById("Product").innerHTML = ""; //清空
       this.pagination(this.catchData, 1); // 用抓到的資料帶回
       this.pageSelect();
-      this.sort0();
+      this.sort();
     },
     sortDate() {
       if (this.sortRe === true) {
         this.catchData.sort(function(a, b) {
-          return a[9] < b[9] ? 1 : -1;
-        });
+          return a[9] < b[9] ? 1 : -1; //用天數比較 小於1天 或 大於1天
+         });
         // console.log(this.catchData)
         this.sortRe = !this.sortRe;
       } else {
@@ -275,29 +275,34 @@ export default {
       document.getElementById("Product").innerHTML = "";
       this.pagination(this.catchData, 1); // 用抓到的資料帶回
       this.pageSelect();
-      this.sort0();
+      this.sort();
     },
     filterNew() {
+      this.catchData = this.ProdcutData;
       for (let i = 0; i < this.catchData.length; i++) {
         var day1 = new Date(this.catchData[i][9].replace(/-/g, "/"));
         var day2 = new Date(); // 當前日期
         var day = day2.getTime() - day1.getTime();
         var time = parseInt(day / (1000 * 60 * 60 * 24));
         this.catchData[i].push(time);
+        //console.log(this.catchData)
       }
       this.catchData = this.catchData.filter(function(item) {
-        return item[11] < 30; // 篩掉小於值
+        return item[10] < 150; // 篩掉大於值180天
+        
       });
+      //console.log(this.catchData)
       document.getElementById("Product").innerHTML = "";
       this.pagination(this.catchData, 1); // 用抓到的資料帶回
       this.pageSelect();
     },
     search() {
-      this.catchData = this.ProdcutData;
-      var searched = this.catchData.map(obj => {
+      let vm = this
+      vm.catchData = vm.ProdcutData;
+      var searched = vm.catchData.map(obj => {
         if (
           Object.keys(obj).some(
-            () => obj[2].toString().indexOf(this.searchValue) !== -1
+            () => obj[2].toString().indexOf(vm.searchValue) !== -1
           )
         ) {
           // 用陣列提供的map函式，遍歷出每筆資料
@@ -307,23 +312,25 @@ export default {
         }
       });
       var Realsearched = searched.filter(function(obj) {
-        return obj !== undefined;
+        return obj !== undefined; 
       });
-      this.catchData = Realsearched;
+      
+      vm.catchData = Realsearched;
       // console.log(this.catchData)
       document.getElementById("Product").innerHTML = "";
       this.pagination(this.catchData, 1);
       this.pageSelect();
     },
     laterSlider(i) {
-      if (this.cartData[0] === undefined) {
-        this.CartInNothing = !this.CartInNothing;
+      let vm = this
+      if (vm.cartData[0] === undefined) {
+        vm.CartInNothing = !vm.CartInNothing;
       }
-      this.ProdcutData[i][5] = !this.ProdcutData[i][5];
-      this.cartData = this.ProdcutData.filter(function(item) {
+      vm.ProdcutData[i][5] = !vm.ProdcutData[i][5];
+      vm.cartData = vm.ProdcutData.filter(function(item) {
         return item[5] === true; // 篩掉出true
       });
-      this.cartDataLength = this.cartData.length;
+      vm.cartDataLength = vm.cartData.length;
       //console.log(this.cartDataLength);
       var data = [this.ProdcutData[i][5]];
       //console.log(data);
@@ -336,7 +343,6 @@ export default {
         row: this.ProdcutData[i][0]
       };
       $.get(
-        //"https://script.google.com/macros/s/AKfycbx9qv7vOKGzbVF57XCjabuTbap2Pigsp34ywUAG83mH55iejwpE/exec",
         "https://script.google.com/macros/s/AKfycbwzGM7BJ8SnGD626ebzQi3xGdBsJzUlOSdiDIkMmBhplN65FtQ/exec",
         parameter
       );
@@ -349,18 +355,19 @@ export default {
       this.cartDataLength = this.cartData.length;
     },
     backData(i) {
+      let vm = this
       var data = [
         [
-          this.catchData[i][0],
-          this.catchData[i][1],
-          this.catchData[i][2],
-          this.catchData[i][3],
-          this.catchData[i][4],
-          this.catchData[i][5],
-          this.catchData[i][6],
-          this.catchData[i][7],
-          this.catchData[i][8],
-          this.catchData[i][9]
+          vm.catchData[i][0],
+          vm.catchData[i][1],
+          vm.catchData[i][2],
+          vm.catchData[i][3],
+          vm.catchData[i][4],
+          vm.catchData[i][5],
+          vm.catchData[i][6],
+          vm.catchData[i][7],
+          vm.catchData[i][8],
+          vm.catchData[i][9]
         ]
       ];
       var parameter = {};
@@ -369,8 +376,8 @@ export default {
           "https://docs.google.com/spreadsheets/d/1LhZ_9DO6JNX2Q7DO_HKRVDoGtyRGEp2ne-m_aIlYQq4/edit#gid=0",
         name: "工作表1",
         data: data.toString(),
-        row: this.catchData[i][0],
-        column: this.catchData[i].length
+        row: vm.catchData[i][0],
+        column: vm.catchData[i].length
       };
       $.get(
         "https://script.google.com/macros/s/AKfycbzKEwZkfPc610W7d8w8cktq6OO2R8Tfw6GgmHe1aZVGDbkXlGQ/exec",
@@ -381,7 +388,7 @@ export default {
         location.href = "https://pito0713.github.io/earingSinglePage/";
       }, 500);
     },
-    CartBackData1() {
+    CartBackDataFun() {
       this.CartBackData = this.CartBackData.filter(
         //    用id 屬性篩選我要的
         function(item) {
@@ -414,7 +421,7 @@ export default {
       })
       .then(CartBackData => {
         this.CartBackData = CartBackData;
-        this.CartBackData1();
+        this.CartBackDataFun();
       });
   }
 };
@@ -449,15 +456,14 @@ export default {
     background-color: var(--product-bg-color);
   }
   li {
-    padding: 1rem 2rem;
+    padding: 1vw 2vw;
     a {
-      font-size: 1.2vw;
+      font-size: 1rem;
     }
   }
   li:hover {
     border-bottom: 1px var(--border-color) solid;
   }
- 
 }
 .Product {
   display: flex;
@@ -481,7 +487,7 @@ export default {
   .searcher {
     border: var(--border-color) 1px solid;
     margin: 1vw 2vw;
-    font-size:  1vw;
+    font-size: 1vw;
   }
 }
 .ProductItem {
@@ -604,15 +610,6 @@ export default {
   .ProductImg {
     height: 18vw;
   }
-  .cartSlidertitle {
-    display: none;
-  }
-  .cartSlider {
-    display: none;
-  }
-  .laterSlider {
-    display: none;
-  }
   .laterSliderRWB {
     display: flex;
   }
@@ -640,13 +637,21 @@ export default {
     }
   }
   .categoryLIst {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  a{
-      font-size: 2rem;
-    };
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    a {
+      font-size: 1rem;
+    }
+  }
+   .cartSlidertitle {
+    display: none;
+  }
+  .cartSlider {
+    display: none;
+  }
+  .laterSlider {
+    display: none;
   }
 }
 @media screen and (max-width: 375px) {
@@ -656,5 +661,8 @@ export default {
   .ProductImg {
     height: auto;
   }
+  a {
+      font-size: 1rem;
+    }
 }
 </style>

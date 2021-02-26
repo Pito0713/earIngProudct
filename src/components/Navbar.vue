@@ -31,14 +31,14 @@ export default {
       isOpen: false,
       scrollTop: '',
       CartBackData: [],
-      CartBackDatalenght: false
+      CartBackDatalenght: false //提醒紅點
     }
   },
   methods: {
     showUp () {
       this.isOpen = !this.isOpen
     },
-    CartBackData1 () {
+    CartBackDataFun () {
       this.CartBackData = this.CartBackData.filter( //    用id 屬性篩選我要的
         function (item) {
            return item[4] !== '' // 篩掉數量0的空值
@@ -59,7 +59,7 @@ export default {
       })
       .then(CartBackData => {
         this.CartBackData  = CartBackData
-        this.CartBackData1 ()
+        this.CartBackDataFun ()
       })  
   }
 }
@@ -160,6 +160,7 @@ export default {
     background-color: var(--background-color);
     width: 40%;
    }
+   
    .navOps {
    /*show navbar*/
    transform: translateX(400px);
