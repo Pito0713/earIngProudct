@@ -616,8 +616,8 @@ export default {
   font-size: 0.5rem;
 }
 .laterSeeDatatext img {
-  max-width: 20%;
-  max-height: 20%;
+  max-width: 70px;
+  max-height: 60px;
 }
 @media screen and (max-width: 769px) {
   .ProductItem {
