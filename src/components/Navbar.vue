@@ -145,6 +145,7 @@ export default {
     .nav-Item {
       padding: 1rem;
       margin: 1rem;
+      font-size: 1rem
     }
     .nav-Item:hover{
         border-bottom:2px var(--border-color) solid;

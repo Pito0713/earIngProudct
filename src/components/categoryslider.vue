@@ -127,6 +127,7 @@
         </div>
       </div>
     </div>
+    <div class="reload" v-show="reload"> <a>載入中</a></div>
   </div>
 </template>
 
@@ -151,7 +152,8 @@ export default {
       timer: "",
       CartBackData: [],
       GetlaterSeeData: [],
-      GetlaterSeeDatalenght: 0
+      GetlaterSeeDatalenght: 0,
+      reload: false,
     };
   },
   watch: {
@@ -382,10 +384,11 @@ export default {
         "https://script.google.com/macros/s/AKfycbzKEwZkfPc610W7d8w8cktq6OO2R8Tfw6GgmHe1aZVGDbkXlGQ/exec",
         parameter
       );
+      this.reload = !this.reload
       this.timer = setTimeout(() => {
         //延遲讓後台更新
         location.href = "https://pito0713.github.io/earingSinglePage/";
-      }, 500);
+      }, 1000);
     },
     CartBackDataFun() {
       this.CartBackData = this.CartBackData.filter(
@@ -465,6 +468,15 @@ export default {
     border-bottom: 1px var(--border-color) solid;
   }
 }
+.reload{
+  display: block;
+  position: fixed;
+  top:50%;
+  left: calc(50% - 1.5rem);
+  background-color: var(--background-color);
+  font-size: 2rem;
+  z-index: 3;
+}
 .Product {
   display: flex;
   position: relative;
@@ -534,7 +546,7 @@ export default {
   align-items: center;
 }
 .laterSliderRWB {
-  z-index: 3;
+  z-index: 2;
   position: fixed;
   bottom: 16vw;
   right: 2vw;
