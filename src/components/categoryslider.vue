@@ -133,7 +133,9 @@
 
 <script>
 import $ from "jquery";
+
 const moment = require("moment");
+moment.suppressDeprecationWarnings = true;
 export default {
   data: function() {
     return {
@@ -327,10 +329,12 @@ export default {
       if (vm.cartData[0] === undefined) {
         vm.CartInNothing = !vm.CartInNothing;
       }
+      //console.log(vm.cartData);
       vm.ProdcutData[i][5] = !vm.ProdcutData[i][5];
       vm.cartData = vm.ProdcutData.filter(function(item) {
         return item[5] === true; // 篩掉出true
       });
+      //console.log(vm.cartData);
       vm.cartDataLength = vm.cartData.length;
       //console.log(this.cartDataLength);
       var data = [this.ProdcutData[i][5]];
@@ -341,10 +345,10 @@ export default {
           "https://docs.google.com/spreadsheets/d/1nXquMbDuBjMx2Eo7qO1XBKNrJBm8xNGRGexuOFozlts/edit#gid=0",
         name: "工作表1",
         data: data.toString(),
-        row: this.ProdcutData[i][0]
+        row: this.ProdcutData[i][0]+ 1 ,
       };
       $.get(
-        "https://script.google.com/macros/s/AKfycbwzGM7BJ8SnGD626ebzQi3xGdBsJzUlOSdiDIkMmBhplN65FtQ/exec",
+        'https://script.google.com/macros/s/AKfycbx9qv7vOKGzbVF57XCjabuTbap2Pigsp34ywUAG83mH55iejwpE/exec',
         parameter
       );
       this.pageSelect(); // 重新載入
